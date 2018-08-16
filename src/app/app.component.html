@@ -1,20 +1,88 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
+<h1>AngularFire Reference</h1>
+
+<ul *ngIf="versions | async; let versions" style="float: right; width: 300px; margin-left: 60px;">
+  <li *ngFor="let version of versions | keyvalue ">
+    <a href="#" (click)="selectVersion($event, version)">
+      {{ version.value.version }}
+    </a>
   </li>
 </ul>
 
+<ng-container *ngIf="selectedVersion | async; let version">
+
+  <div *ngIf="groups | async; let groups" style="clear: both; float: right; width: 300px; margin-left: 60px;">
+    <ul>
+      <li *ngFor="let group of groups">
+        <h2>{{ group.title }}</h2>
+        <ul>
+          <li *ngFor="let child of group.children">
+            <a href="#" (click)="changePath($event, [group, child])">
+              {{ child.name }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <ng-container *ngIf="currentPath | async; let currentPath">
+  
+    <ul>
+      <li *ngFor="let component of currentPath">
+        {{ component.title || component.name }}
+      </li>
+    </ul>
+
+  </ng-container>
+
+  <ng-container *ngIf="selectedComponent | async; let component">
+
+    <dl>
+      <ng-container *ngFor="let child of component.children">
+        <dt style="font-weight: bold">{{ child.name }}</dt>
+        <dd *ngFor="let signature of child.signatures">
+          <ol>
+            <li *ngFor="let parameter of signature.parameters">
+              <ol *ngIf="parameter.decorators; let decorators">
+                <li *ngFor="let decorator of decorators">
+                  {{ decorator.name }}
+                </li>
+              </ol>
+              {{ parameter.name }}
+              <em *ngIf="parameter.type; let type">
+                {{ type.name }}
+                <ol *ngIf="type.types; let subtypes">
+                  <li *ngFor="let subtype of subtypes">{{ subtype.name }}</li>
+                </ol>
+              </em>
+            </li>
+          </ol>
+        </dd>
+        <dd>
+            <em *ngIf="child.type; let type">
+              {{ type.name }}
+              <ol *ngIf="type.typeArguments; let arguments">
+                <li>TODO recurse the type<></li>
+              </ol>
+              <ol *ngIf="type.types; let subtypes">
+                <li *ngFor="let subtype of subtypes">{{ subtype.name }}</li>
+              </ol>
+            </em>
+        </dd>
+        <dd *ngIf="child.comment; let comment">{{ comment.shortText }}</dd>
+        <dd *ngIf="child.sources; let sources">
+          <ul>
+            <li *ngFor="let source of sources">
+              <a [href]="'https://github.com/angular/angularfire2/blob/5.0.0-rc.11/src/' + source.fileName + '#L' + source.line">
+                <code>{{ source.fileName }} {{ source.line }}:{{ source.character }}</code>
+              </a>
+          </ul>
+        </dd>
+      </ng-container>
+    </dl>
+
+    <!--<pre>{{ component | json }}</pre>/-->
+
+  </ng-container>
+
+</ng-container>
