@@ -9,25 +9,26 @@
     <app-type [type]="component" *ngIf="!component.children"></app-type>
     <code *ngIf="component.defaultValue">{{ component.defaultValue }}</code>
     <p *ngIf="component.comment; let comment">{{ comment.shortText }}</p>
-    <ul *ngIf="component.sources; let sources">
-      <li *ngFor="let source of sources">
+    <p class="sources" *ngIf="component.sources; let sources">
+      Defined on
+      <ng-container *ngFor="let source of sources">
         <a [href]="'https://github.com/angular/angularfire2/blob/' + version.version + '/src/' + source.fileName + '#L' + source.line">
-          <code>{{ source.fileName }} {{ source.line }}:{{ source.character }}</code>
+          line {{ source.line }} of {{source.fileName}}
         </a>
-    </ul>
+      </ng-container>
+    </p>
     <dl>
       <ng-container *ngFor="let child of component.children">
         <dt>
           <app-type [type]="child"></app-type>
         </dt>
         <dd *ngIf="child.comment; let comment">{{ comment.shortText }}</dd>
-        <dd *ngIf="child.sources; let sources">
-          <ul>
-            <li *ngFor="let source of sources">
-              <a [href]="'https://github.com/angular/angularfire2/blob/' + version.version + '/src/' + source.fileName + '#L' + source.line">
-                <code>{{ source.fileName }} {{ source.line }}:{{ source.character }}</code>
-              </a>
-          </ul>
+        <dd class="sources" *ngIf="child.sources; let sources">
+          Defined on
+          <ng-container *ngFor="let source of sources">
+            <a [href]="'https://github.com/angular/angularfire2/blob/' + version.version + '/src/' + source.fileName + '#L' + source.line">
+              line {{ source.line }} of {{source.fileName}}</a>
+          </ng-container>
         </dd>
       </ng-container>
     </dl>

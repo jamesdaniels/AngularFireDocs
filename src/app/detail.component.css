@@ -11,6 +11,26 @@ h1 {
     margin-top: 0;
 }
 
+.sources {
+    font-size: 0.8em;
+}
+
+.sources a + a::before {
+    content: ", "
+}
+
+.sources a + a:last-child::before {
+    content: ", and "
+}
+
+dt {
+    margin-top: 1em;
+}
+
+dd {
+    margin-left: 0.5em;
+}
+
 h1 code {
     color: #666;
     font-family: 'Courier New', Courier, monospace;

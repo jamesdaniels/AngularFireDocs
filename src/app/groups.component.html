@@ -1,14 +1,24 @@
 <ng-container *ngIf="tsdocs.selectedVersion | async; let version">
-  <ul *ngIf="tsdocs.groups | async; let groups">
-    <li *ngFor="let group of groups">
-      <h2>{{ group.title }}</h2>
+  <ul>
+    <li>
+      <h2>Packages</h2>
       <ul>
-        <li *ngFor="let child of group.children">
-          <a routerLink="/{{version.version}}/{{group.title}}/{{child.name}}" routerLinkActive="active">
-            {{ child.name }}
-          </a>
+        <li *ngFor="let package of version.packages | keyvalue">
+          <a routerLink="/">{{ package.value.name }}</a>  
         </li>
       </ul>
     </li>
+    <ng-container *ngIf="tsdocs.groups | async; let groups">
+      <li *ngFor="let group of groups">
+        <h2>{{ group.title }}</h2>
+        <ul>
+          <li *ngFor="let child of group.children">
+            <a routerLink="/{{version.version}}/{{group.title}}/{{child.name}}" routerLinkActive="active">
+              {{ child.name }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ng-container>
   </ul>
 </ng-container>
