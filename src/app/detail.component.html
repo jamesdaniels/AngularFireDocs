@@ -1,6 +1,20 @@
 <ng-container *ngIf="component | async; let component">
   <ng-container *ngIf="tsdoc.selectedVersion | async; let version">
-    <h1>{{ component.name }}</h1>
+    <h1>
+      {{ component.name }}
+      <ng-container *ngIf="component.decorators">
+        <code *ngFor="let decorator of component.decorators">@{{ decorator.name }}</code>
+      </ng-container>
+    </h1>
+    <app-type [type]="component" *ngIf="!component.children"></app-type>
+    <code *ngIf="component.defaultValue">{{ component.defaultValue }}</code>
+    <p *ngIf="component.comment; let comment">{{ comment.shortText }}</p>
+    <ul *ngIf="component.sources; let sources">
+      <li *ngFor="let source of sources">
+        <a [href]="'https://github.com/angular/angularfire2/blob/' + version.version + '/src/' + source.fileName + '#L' + source.line">
+          <code>{{ source.fileName }} {{ source.line }}:{{ source.character }}</code>
+        </a>
+    </ul>
     <dl>
       <ng-container *ngFor="let child of component.children">
         <dt>

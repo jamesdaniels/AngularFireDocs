@@ -1,0 +1,44 @@
+div.sidebar {
+    float: left;
+    width: 300px;
+    margin-right: 50px;
+    background-color: white;
+}
+
+nav {
+    padding: 1em;
+    background-color: rgb(33, 33, 33);
+    color: white;
+    order: 1;
+}
+
+hr {
+    opacity: 0.5;
+}
+
+nav a img {
+    margin-bottom: -10px;
+}
+
+nav a {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    margin-bottom: 20px;
+    display: block;
+}
+
+content {
+    display: flex;
+}
+
+section {
+    order: 2;
+    padding: 1em;
+}
+
+app-versions {
+    margin: 1em 0;
+    display: block;
+}

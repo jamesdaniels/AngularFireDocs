@@ -1,8 +1,12 @@
-<a routerLink="/">AngularFire Reference</a>
-
-<div style="float: right; width: 300px; margin-left: 50px">
-  <app-versions></app-versions>
-  <app-groups></app-groups>
-</div>
-
-<router-outlet></router-outlet>
+<content>
+  <nav>
+    <a routerLink="/" class="title"><img src="https://firebase.google.com/_static/images/firebase/touchicon-180.png" height="40"> AngularFire2</a>
+    <hr>
+    <app-versions></app-versions>
+    <hr>
+    <app-groups></app-groups>
+  </nav>
+  <section>
+    <router-outlet></router-outlet>
+  </section>
+</content>

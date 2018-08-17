@@ -1,4 +1,7 @@
-a.active {
-    text-decoration: none;
-    font-weight: bold;
+select {
+    font-size: 1.1em;
+}
+
+label {
+    color: white;
 }

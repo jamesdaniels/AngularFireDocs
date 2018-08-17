@@ -11,6 +11,7 @@ import { DetailComponent } from './detail.component';
 import { TypeComponent } from './type.component';
 import { VersionsComponent } from './versions.component';
 import { GroupsComponent } from './groups.component';
+import { ReadmeComponent } from './readme.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { GroupsComponent } from './groups.component';
     DetailComponent,
     TypeComponent,
     VersionsComponent,
-    GroupsComponent
+    GroupsComponent,
+    ReadmeComponent
   ],
   imports: [
     BrowserModule,

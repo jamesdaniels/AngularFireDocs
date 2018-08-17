@@ -1,4 +1,17 @@
 a.active {
-    text-decoration: none;
+    color: white;
     font-weight: bold;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.97em;
+}
+
+a {
+    font-weight: lighter;
+    color: #bbb;
+    text-decoration: none;
 }

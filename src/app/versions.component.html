@@ -1,14 +1,11 @@
-<ul *ngIf="tsdocs.versions | async; let versions">
-  <li *ngFor="let version of versions | keyvalue ">
-    <ng-container *ngIf="tsdocs.currentPath | async; let path">
-      <a routerLink="/{{version.value.version}}/{{path[0].title}}/{{path[1].name}}" routerLinkActive="active">
-        {{ version.value.version }}
-      </a>
+<label>
+  <select *ngIf="tsdocs.versions | async; let versions" (change)="changeVersion($event.target.value)">
+    <ng-container *ngIf="tsdocs.selectedVersionKey | async; let selectedVersionKey">
+      <ng-container *ngFor="let version of versions | keyvalue ">
+        <option [value]="version.value.version" [selected]="version.key === selectedVersionKey ? 'selected' : ''">
+          {{ version.value.version }}
+        </option>
+      </ng-container>
     </ng-container>
-    <ng-container *ngIf="(tsdocs.currentPath | async) == null">
-      <a routerLink="/{{version.value.version}}" routerLinkActive="active">
-        {{ version.value.version }}
-      </a>
-    </ng-container>
-  </li>
-</ul>
+  </select>
+</label>

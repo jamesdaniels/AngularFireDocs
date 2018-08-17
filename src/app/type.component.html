@@ -1,4 +1,11 @@
-<span *ngIf="!(type.declaration && type.declaration.signatures || type.signatures) && type.name; let name">{{ name }}</span>
+<ol class="decorators" *ngIf="type.decorators; let decorators">
+  <li *ngFor="let decorator of decorators"><span>{{ decorator.name }}</span></li>
+</ol>
+
+<span *ngIf="!(type.declaration && type.declaration.signatures || type.signatures) && type.name; let name" [class]="isPrimitive(type.name) ? 'primitive' : 'class'">
+  <ng-container *ngIf="!type.id">{{ name }}</ng-container>
+  <a href="#" *ngIf="type.id">{{ name }}</a>
+</span>
 
 <ng-container *ngIf="type.declaration && type.declaration.signatures || type.signatures; let signatures">
   <div class="signature" *ngFor="let signature of signatures">
@@ -11,7 +18,7 @@
     <ol class="signature">
       <li *ngFor="let parameter of signature.parameters">
         <ol class="decorators" *ngIf="parameter.decorators; let decorators">
-          <li *ngFor="let decorator of decorators">{{ decorator.name }}</li>
+          <li *ngFor="let decorator of decorators"><span>{{ decorator.name }}</span></li>
         </ol>
         <span *ngIf="parameter.name; let name">{{ name }}</span><ng-container *ngIf="parameter.type; let type">
           <app-type [type]="type.declaration || type"></app-type>
@@ -28,13 +35,14 @@
   </li>
 </ol>
 
-<ol [class]="'subtype_' + type.type" *ngIf="type.types; let subtypes">
+<ol [class]="'subtype subtype_' + type.type" *ngIf="type.types; let subtypes">
   <li *ngFor="let subtype of subtypes">
     <app-type [type]="subtype"></app-type>
   </li>
 </ol>
 
 <ng-container *ngIf="type.declaration && type.declaration.type || type.type; let subtype">
+  <ng-container *ngIf="subtype == 'stringLiteral'">"{{type.value}}"</ng-container>
   <ng-container *ngIf="subtype == 'array'">
     <app-type [type]="type.elementType"></app-type>[]</ng-container>
   <app-type [type]="subtype" *ngIf="ifObject(subtype)"></app-type>

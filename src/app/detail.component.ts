@@ -17,7 +17,6 @@ export class DetailComponent implements OnInit {
     private route: ActivatedRoute,
     private tsdoc: TSDocService
   ) {
-    console.log(route);
     combineLatest(route.params, tsdoc.versions).pipe(
       map(([params, versions]) => {
         console.log(params);

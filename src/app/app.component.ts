@@ -13,9 +13,8 @@ export class AppComponent {
   title = 'app';
   constructor(
     private route: ActivatedRoute,
-    private tsdocs: TSDocService
+    public tsdocs: TSDocService
   ) {
-    console.log(route);
     combineLatest(route.params, tsdocs.versions).pipe(
       map(([params, versions]) => {
         console.log(params);

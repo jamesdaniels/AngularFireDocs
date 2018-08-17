@@ -1,5 +1,18 @@
-dt {
-    font-family: monospace;
-    font-size: 1.2em;
+app-type {
+    font-family: 'Courier New', Courier, monospace;
     margin-bottom: 1em;
+    background-color: rgb(33, 33, 33);
+    padding: 0.5em;
+    color: rgb(187, 232, 243);
+    display: block;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+h1 code {
+    color: #666;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: lighter;
 }

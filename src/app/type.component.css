@@ -5,6 +5,37 @@ ol, ol li {
     list-style: none;
 }
 
+span, a {
+    color: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+app-type > span.class,
+app-type > span.class > a {
+    color: rgb(255, 203, 107);
+}
+
+app-type > span.class > a {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+
+li > app-type > span.primitive,
+li > app-type > span.primitive > a {
+    color: rgb(178, 204, 214);
+}
+
+ol.decorators span {
+    color: rgb(98, 152, 251 );
+}
+
+ol.signature > li > span {
+    color: rgb(243, 124, 82);
+}
+
 ol.arguments li + li::before {
     content: ", "
 }

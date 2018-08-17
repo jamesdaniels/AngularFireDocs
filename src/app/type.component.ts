@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TypeComponent implements OnInit {
 
-  @Input() type: {};
+  @Input() type: any;
 
   constructor() { }
 
@@ -16,6 +16,10 @@ export class TypeComponent implements OnInit {
 
   ifObject(it) {
     return typeof it === "object";
+  }
+
+  isPrimitive(type) {
+    return ['undefined', 'null', 'boolean', 'string', 'number'].indexOf(type) >= 0;
   }
 
 }
