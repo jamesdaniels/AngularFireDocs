@@ -9,7 +9,7 @@
     ]
   },
   "hosting": {
-    "public": "dist/afdocsite",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -18,7 +18,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "function": "reference"
       }
     ]
   }
