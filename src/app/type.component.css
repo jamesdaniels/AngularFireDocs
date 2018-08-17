@@ -1,0 +1,86 @@
+ol, ol li {
+    display: inline !important;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ol.arguments li + li::before {
+    content: ", "
+}
+
+ol.arguments::before {
+    content: "<"
+}
+
+ol.arguments::after {
+    content: ">"
+}
+
+ol.subtype_union li + li::before {
+    content: "|"
+}
+
+dt {
+    font-family: monospace
+}
+
+ol.signature, ol.signature li, ol.signature ol {
+    display: inline !important;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ol.signature > li {
+    display: block !important;
+    margin-left: 1em;
+}
+
+ol.signature > li::after {
+   content: ","
+}
+
+ol.signature > li:last-child::after {
+    content: none;
+}
+
+ol.decorators + span::before {
+    content: " ";
+}
+
+span + app-type::before {
+    content: ": "
+}
+
+li span + app-type::before {
+    content: ": "
+}
+
+div.signature + div.signature {
+    margin-top: 1em;
+}
+
+ol.signature + app-type::before {
+    content: " => "
+}
+
+app-type {
+    font-style: italic;
+}
+
+ol.decorators li::before {
+    content: "@"
+}
+
+ol.decorators li + li::before {
+    content: " @"
+}
+
+ol.signature::before {
+    content: "("
+}
+
+ol.signature::after {
+    content: ")"
+}

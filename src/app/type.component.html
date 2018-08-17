@@ -1,0 +1,41 @@
+<span *ngIf="!(type.declaration && type.declaration.signatures || type.signatures) && type.name; let name">{{ name }}</span>
+
+<ng-container *ngIf="type.declaration && type.declaration.signatures || type.signatures; let signatures">
+  <div class="signature" *ngFor="let signature of signatures">
+    <span *ngIf="type.name !== '__type'">{{ type.name }}</span>
+    <ol class="arguments" *ngIf="signature.typeParameter; let arguments">
+      <li *ngFor="let argument of arguments">
+        <app-type [type]="argument"></app-type>
+      </li>
+    </ol>
+    <ol class="signature">
+      <li *ngFor="let parameter of signature.parameters">
+        <ol class="decorators" *ngIf="parameter.decorators; let decorators">
+          <li *ngFor="let decorator of decorators">{{ decorator.name }}</li>
+        </ol>
+        <span *ngIf="parameter.name; let name">{{ name }}</span><ng-container *ngIf="parameter.type; let type">
+          <app-type [type]="type.declaration || type"></app-type>
+        </ng-container>
+      </li>
+    </ol>
+    <app-type [type]="signature.type"></app-type>
+  </div>
+</ng-container>
+
+<ol class="arguments" *ngIf="type.typeArguments; let arguments">
+  <li *ngFor="let argument of arguments">
+    <app-type [type]="argument"></app-type>
+  </li>
+</ol>
+
+<ol [class]="'subtype_' + type.type" *ngIf="type.types; let subtypes">
+  <li *ngFor="let subtype of subtypes">
+    <app-type [type]="subtype"></app-type>
+  </li>
+</ol>
+
+<ng-container *ngIf="type.declaration && type.declaration.type || type.type; let subtype">
+  <ng-container *ngIf="subtype == 'array'">
+    <app-type [type]="type.elementType"></app-type>[]</ng-container>
+  <app-type [type]="subtype" *ngIf="ifObject(subtype)"></app-type>
+</ng-container>

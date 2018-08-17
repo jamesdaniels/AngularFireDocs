@@ -1,0 +1,21 @@
+<ng-container *ngIf="component | async; let component">
+  <ng-container *ngIf="tsdoc.selectedVersion | async; let version">
+    <h1>{{ component.name }}</h1>
+    <dl>
+      <ng-container *ngFor="let child of component.children">
+        <dt>
+          <app-type [type]="child"></app-type>
+        </dt>
+        <dd *ngIf="child.comment; let comment">{{ comment.shortText }}</dd>
+        <dd *ngIf="child.sources; let sources">
+          <ul>
+            <li *ngFor="let source of sources">
+              <a [href]="'https://github.com/angular/angularfire2/blob/' + version.version + '/src/' + source.fileName + '#L' + source.line">
+                <code>{{ source.fileName }} {{ source.line }}:{{ source.character }}</code>
+              </a>
+          </ul>
+        </dd>
+      </ng-container>
+    </dl>
+  </ng-container>
+</ng-container>

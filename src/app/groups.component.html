@@ -1,0 +1,14 @@
+<ng-container *ngIf="tsdocs.selectedVersion | async; let version">
+  <ul *ngIf="tsdocs.groups | async; let groups">
+    <li *ngFor="let group of groups">
+      <h2>{{ group.title }}</h2>
+      <ul>
+        <li *ngFor="let child of group.children">
+          <a routerLink="/{{version.version}}/{{group.title}}/{{child.name}}" routerLinkActive="active">
+            {{ child.name }}
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</ng-container>
