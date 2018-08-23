@@ -5,8 +5,9 @@ import { AngularFireStorage } from 'angularfire2/storage';
 import { AngularFireMessaging } from 'angularfire2/messaging';
 import { AngularFireFunctions } from 'angularfire2/functions';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { isPlatformBrowser } from '../../node_modules/@angular/common';
-import { timeout } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
+
+import * as firestore from 'firebase/firestore';
 
 @Component({
   selector: 'app-kitchen-sink',
@@ -39,11 +40,11 @@ export class KitchenSinkComponent implements OnInit {
       r => this.rtdbTest = r,
       e => console.log("rtdb", e)
     );
+    firestore.doc('versions/5.0.0-rc.11').valueChanges().subscribe(
+      r => this.firestoreTest = r,
+      e => console.log("afs", e)
+    );
     if (isPlatformBrowser(platformId)) {
-      firestore.doc('versions/5.0.0-rc.11').valueChanges().subscribe(
-        r => this.firestoreTest = r,
-        e => console.log("afs", e)
-      );
       storage.ref('unnamed.gif').getDownloadURL().subscribe(
         r => this.storageTest = r,
         e => console.log("storage", e)
