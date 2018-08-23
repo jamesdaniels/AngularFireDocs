@@ -12,6 +12,8 @@ import { TypeComponent } from './type.component';
 import { VersionsComponent } from './versions.component';
 import { GroupsComponent } from './groups.component';
 import { ReadmeComponent } from './readme.component';
+import { KitchenSinkModule } from './/kitchen-sink.module';
+import { KitchenSinkRoutingModule } from './/kitchen-sink-routing.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { ReadmeComponent } from './readme.component';
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AppRoutingModule
+    AppRoutingModule,
+    KitchenSinkModule,
+    KitchenSinkRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

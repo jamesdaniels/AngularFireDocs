@@ -5,12 +5,18 @@ const APP_NAME = 'afdocsite';
 
 module.exports = {
   entry: {  server: './server.ts' },
-  resolve: { extensions: ['.js', '.ts'] },
+  resolve: { 
+    extensions: ['.js', '.json', '.ts', '.tsx'],
+    mainFields: ["main", "module"],
+    mainFiles: ['index.node', 'index']
+  },
   mode: 'development',
   target: 'node',
-  externals: [/(node_modules|main\..*\.js)/],
+  externals: ["grpc"],
   output: {
-    path: path.join(__dirname, `dist/${APP_NAME}`),
+    path: path.join(__dirname, `dist/${APP_NAME}-webpack`),
+    library: 'app',
+    libraryTarget: 'umd',
     filename: '[name].js'
   },
   module: {

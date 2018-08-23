@@ -17,7 +17,6 @@ export class AppComponent {
   ) {
     combineLatest(route.params, tsdocs.versions).pipe(
       map(([params, versions]) => {
-        console.log(params);
         return Object.keys(versions).find(versionKey => {
           const version = versions[versionKey];
           return params.version ? version.version == params.version : version.current;
