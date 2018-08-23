@@ -15,7 +15,7 @@ module.exports = {
   externals: [
     "grpc",      // has native components, don't bundle
     /^firebase/, // having trouble with registering the CJS when webpacked
-    "@firebase"  // proto paths aren't resolving with webpacked @firebase/firestore
+    /^@firebase/ // proto paths aren't resolving with webpacked @firebase/firestore
   ],
   output: {
     path: path.join(__dirname, `dist/${APP_NAME}-webpack`),

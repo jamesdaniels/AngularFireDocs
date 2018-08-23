@@ -13,7 +13,7 @@ import { readFileSync } from 'fs';
 
 // Required for Firebase
 (global as any).WebSocket = require('ws');
-(global as any).XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+(global as any).XMLHttpRequest = require('xhr2');
 (global as any).Headers = fetch.Headers;
 
 // Faster renders in prod mode

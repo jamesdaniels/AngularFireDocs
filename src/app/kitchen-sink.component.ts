@@ -45,18 +45,24 @@ export class KitchenSinkComponent implements OnInit {
       e => console.log("afs", e)
     );
     if (isPlatformBrowser(platformId)) {
+      // TOOD address. Storage is working on first call, but then timing out
+      // as if the connection to the server is persisting (and not in the
+      // good way, like you want).
+      // This also needs xhr2 to work, rather than xmlhttprequest...
       storage.ref('unnamed.gif').getDownloadURL().subscribe(
         r => this.storageTest = r,
         e => console.log("storage", e)
+      );
+      // TODO address. Now that I'm using the node.cjs libs this is failing
+      // server-side. It was working fine with the browser libraries / webpack.
+      functions.httpsCallable('test').call({}).subscribe(
+        r => this.functionsTest = r,
+        e => console.log("functions", e)
       );
     }
     messaging.getToken.subscribe(
       r => this.fcmTest = r,
       e => console.log("fcm", e)
-    );
-    functions.httpsCallable('test').call({}).subscribe(
-      r => this.functionsTest = r,
-      e => console.log("functions", e)
     );
     auth.user.subscribe(
       r => this.authTest = r,
