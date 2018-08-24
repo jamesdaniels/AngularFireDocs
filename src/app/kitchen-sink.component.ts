@@ -1,4 +1,4 @@
-import { Component, OnInit, ApplicationRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, ApplicationRef, PLATFORM_ID, Inject, NgZone } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireStorage } from 'angularfire2/storage';
@@ -31,7 +31,8 @@ export class KitchenSinkComponent implements OnInit {
     private messaging: AngularFireMessaging,
     private functions: AngularFireFunctions,
     private auth: AngularFireAuth,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private zone: NgZone
   ) {
     appRef.isStable.subscribe(
       s => console.log('isStable', s)
@@ -44,22 +45,14 @@ export class KitchenSinkComponent implements OnInit {
       r => this.firestoreTest = r,
       e => console.log("afs", e)
     );
-    if (isPlatformBrowser(platformId)) {
-      // TOOD address. Storage is working on first call, but then timing out
-      // as if the connection to the server is persisting (and not in the
-      // good way, like you want).
-      // This also needs xhr2 to work, rather than xmlhttprequest...
-      storage.ref('unnamed.gif').getDownloadURL().subscribe(
-        r => this.storageTest = r,
-        e => console.log("storage", e)
-      );
-      // TODO address. Now that I'm using the node.cjs libs this is failing
-      // server-side. It was working fine with the browser libraries / webpack.
-      functions.httpsCallable('test').call({}).subscribe(
-        r => this.functionsTest = r,
-        e => console.log("functions", e)
-      );
-    }
+    storage.ref('unnamed.gif').getDownloadURL().subscribe(
+      r => this.storageTest = r,
+      e => console.log("storage", e)
+    );
+    functions.httpsCallable('test').call({}).subscribe(
+      r => this.functionsTest = r,
+      e => console.log("functions", e)
+    );
     messaging.getToken.subscribe(
       r => this.fcmTest = r,
       e => console.log("fcm", e)

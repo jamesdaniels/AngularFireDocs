@@ -5,7 +5,6 @@ import 'reflect-metadata';
 import { enableProdMode } from '@angular/core';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
-import * as fetch from 'node-fetch';
 
 import * as express from 'express';
 import { join } from 'path';
@@ -14,7 +13,8 @@ import { readFileSync } from 'fs';
 // Required for Firebase
 (global as any).WebSocket = require('ws');
 (global as any).XMLHttpRequest = require('xhr2');
-(global as any).Headers = fetch.Headers;
+(global as any).XMLHttpRequestEventTarget = require('xhr2').XMLHttpRequestEventTarget;
+(global as any).XMLHttpRequestUpload = require('xhr2').XMLHttpRequestUpload;
 
 // Faster renders in prod mode
 enableProdMode();
