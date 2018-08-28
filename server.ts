@@ -5,16 +5,16 @@ import 'reflect-metadata';
 import { enableProdMode } from '@angular/core';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { renderModuleFactory } from '@angular/platform-server';
+import { mkdirSync } from 'mkdir-recursive';
 
 import * as express from 'express';
 import { join } from 'path';
-import { readFileSync } from 'fs';
 
 // Required for Firebase
 (global as any).WebSocket = require('ws');
 (global as any).XMLHttpRequest = require('xhr2');
-(global as any).XMLHttpRequestEventTarget = require('xhr2').XMLHttpRequestEventTarget;
-(global as any).XMLHttpRequestUpload = require('xhr2').XMLHttpRequestUpload;
 
 // Faster renders in prod mode
 enableProdMode();
@@ -47,3 +47,34 @@ app.get('*.*', express.static(join(DIST_FOLDER, APP_NAME)));
 app.get('*', (req, res) => {
   res.render(join(DIST_FOLDER, APP_NAME, 'index.html'), { req });
 });
+
+if (process.env.PRERENDER) {
+
+  const routes = require('./static.paths').default;
+  Promise.all(
+      routes.map(route =>
+          renderModuleFactory(AppServerModuleNgFactory, {
+              document: template,
+              url: route,
+              extraProviders: [
+                  provideModuleMap(LAZY_MODULE_MAP)
+              ]
+          }).then(html => [route, html])
+      )
+  ).then(results => {
+      results.forEach(([route, html]) => {
+          const fullPath = join('./public', route);
+          if (!existsSync(fullPath)) { mkdirSync(fullPath) }
+          writeFileSync(join(fullPath, 'index.html'), html);
+      });
+      process.exit();
+  });
+
+} else if (!process.env.FUNCTION_NAME) {
+
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(`Node server listening on http://localhost:${PORT}`);
+  });
+
+}

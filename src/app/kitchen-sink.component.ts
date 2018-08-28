@@ -5,9 +5,6 @@ import { AngularFireStorage } from 'angularfire2/storage';
 import { AngularFireMessaging } from 'angularfire2/messaging';
 import { AngularFireFunctions } from 'angularfire2/functions';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { isPlatformBrowser } from '@angular/common';
-
-import * as firestore from 'firebase/firestore';
 
 @Component({
   selector: 'app-kitchen-sink',
@@ -30,7 +27,7 @@ export class KitchenSinkComponent implements OnInit {
     private storage: AngularFireStorage,
     private messaging: AngularFireMessaging,
     private functions: AngularFireFunctions,
-    private auth: AngularFireAuth,
+    public auth: AngularFireAuth,
     @Inject(PLATFORM_ID) private platformId: Object,
     private zone: NgZone
   ) {
