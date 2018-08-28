@@ -39,8 +39,10 @@ testem.log
 Thumbs.db
 
 
-functions/node_modules
-functions/lib
-functions/dist
+/functions/node_modules
+/functions/lib
+/functions/dist
 
-public
+/public
+
+firebase-debug.log
